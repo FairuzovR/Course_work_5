@@ -22,7 +22,6 @@ class Apifile:
         return data
         # print(data)
 
-# get_industry(675794)
 
     def get_vacancyes_company(self):
 
@@ -32,7 +31,29 @@ class Apifile:
         return data
         # print(data)
 
+    @staticmethod
+    def write_company_for_joisn(file):
+        """Метод выводит словари с нужными данными в итерации списка экземпляров класса
+        и записывает их в словарь для дальнейший записи в json файл"""
+        data_list = []
+        for temp in file:
+            data_list.append({'company_id': temp['id'], 'company_name': temp['name']})
+        return data_list
 
-ABS = Apifile(675794)
+    @staticmethod
+    def write_vacancy_for_joisn(file):
+        data_list = []
+        for temp in file:
+            data_list.append({'vacancy_id': temp['id'], 'vacancy_name': temp['name'], 'city' : temp['area']['name'],
+                              'salary_from' : temp['salary']['from'], 'salary_to' : temp['salary']['to'],
+                              'url_vacancy' : temp['apply_alternate_url'], 'company_id' : temp['employer']['id']})
+        return data_list
 
+
+ABS = Apifile('23435')
+#
 print(ABS.get_vacancyes_company())
+# a = ABS.get_vacancyes_company()['items']
+# for i in a:
+#     print(i)
+# print(ABS.get_vacancyes_company())
