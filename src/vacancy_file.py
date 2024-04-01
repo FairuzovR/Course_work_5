@@ -1,9 +1,9 @@
 import requests
 
-company_id = [675794, 562530, 3148, 1276, 1552384, 78638, 1346,  23435, 4934, 20986]
-
 def validate_salary(salary, key):
-    """Метод проверяет указана ли зарплата и отдает 0 в случае None"""
+    """Метод проверяет указана ли зарплата, если общее None, то передаст каждому None,
+     если один из двух показателей salary None, то передаст 0
+     """
     if key == 'from':
         if salary is None:
             return None
@@ -24,15 +24,12 @@ def validate_salary(salary, key):
 
 class Apivacancy:
 
-    def __init__(self, company_id):
-        self.company_id = company_id
-
-    def get_vacancyes_company(self):
+    def get_vacancyes_company(self, company_id):
         """
-        Функция для получения данных компании по интентификатору
+        Метод класса для получения данных компании по интентификатору
         """
         data_list = list()
-        url = f'https://api.hh.ru/vacancies?employer_id={self.company_id}'
+        url = f'https://api.hh.ru/vacancies?employer_id={company_id}'
         response = requests.get(url)
         data = response.json()
         # return data['items']
@@ -44,6 +41,3 @@ class Apivacancy:
                               'company_id': temp['employer']['id'],
             })
         return data_list
-
-# a = Apivacancy(562530)
-# print(a.get_vacancyes_company())
